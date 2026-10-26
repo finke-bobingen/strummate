@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111318">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>StrumMate – Gitarren Live</title>
+<style>
+:root{--bg:#111318;--panel:#1b1e25;--panel2:#232833;--line:#343946;--text:#f4f5f7;--muted:#aeb5c2;--accent:#b7f36b;--accent2:#d9ffad;--blue:#a9c6ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:10px 13px}button.primary{background:var(--accent);color:#141811;border-color:var(--accent);font-weight:750}button.active{border-color:var(--accent);color:var(--accent)}input,select,textarea{background:#11141a;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px;width:100%;min-width:0}textarea{min-height:110px;resize:vertical}.app{max-width:1200px;margin:auto;padding:env(safe-area-inset-top) 16px calc(24px + env(safe-area-inset-bottom))}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 0}.brand{font-size:21px;font-weight:850;letter-spacing:-.5px}.brand span{color:var(--accent)}.sub{color:var(--muted);font-size:13px}.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:15px;min-width:0}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.sectionhead h2{font-size:16px;margin:0}.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.chips{display:flex;gap:8px;flex-wrap:wrap}.chord{min-width:65px;flex:1;text-align:center;background:#303746;border:1px solid #41495a;border-radius:12px;padding:10px 7px}.chord b{display:block;font-size:19px;color:var(--accent2)}.chord small{font-size:11px;color:var(--muted)}.songtitle{font-size:25px;font-weight:800;letter-spacing:-.7px;margin:0}.meta{color:var(--muted);margin-top:3px}.pill{display:inline-block;border:1px solid var(--line);padding:4px 9px;border-radius:99px;color:var(--muted);font-size:12px}.player{background:#090b0e;border-radius:14px;overflow:hidden;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative}.player iframe,.player video{width:100%;height:100%;border:0}.placeholder{text-align:center;padding:20px;color:var(--muted)}.transport{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}.transport button{min-width:44px}.transport input[type=range]{flex:1;padding:0;accent-color:var(--accent)}.lyrics{max-height:310px;overflow:auto;scroll-behavior:smooth;padding:5px 2px}.lyricline{padding:9px 11px;border-radius:10px;color:#c7cbd4;transition:background .2s,color .2s;font-size:18px}.lyricline.current{background:#303b2a;color:white;outline:1px solid #50683a}.lyricline .inlinechord{color:var(--accent);font-weight:800;font-size:13px;display:block;letter-spacing:.5px}.tabs{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre;overflow:auto;background:#101319;border-radius:12px;padding:13px;color:#d8e4ff;font-size:14px;line-height:1.7}.timeline{display:flex;gap:6px;overflow:auto;padding:5px 0}.timeline button{white-space:nowrap}.grid2{display:grid;grid-template-columns:1fr;gap:14px}.note{font-size:12px;color:var(--muted)}.formgrid{display:grid;grid-template-columns:1fr;gap:9px}.status{color:var(--accent);font-size:12px}.smallbtn{padding:7px 10px;font-size:13px}.divider{height:1px;background:var(--line);margin:13px 0}.hide{display:none!important}
+@media(min-width:800px){.app{padding-left:24px;padding-right:24px}.layout{grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr)}.span2{grid-column:1/-1}.grid2{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1.2fr 1fr}.songtitle{font-size:30px}}
+
+.practicebar{margin-top:12px;padding:12px;background:#10151d;border:1px solid var(--line);border-radius:14px}
+.practice-main{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:8px;align-items:center}
+.practice-main button{font-size:17px;min-height:54px}
+.practice-main .playbig{background:var(--accent);color:#08231b;border-color:var(--accent);font-size:18px}
+.loopbar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+.loopbar button{min-height:48px}
+.loopbar button.set{border-color:var(--gold);color:var(--gold)}
+.loopbar button.active{background:var(--gold);color:#251c05;border-color:var(--gold)}
+.loopinfo{text-align:center;color:var(--muted);font-size:12px;margin-top:7px;font-variant-numeric:tabular-nums}
+.bigtime{text-align:center;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;margin:9px 0 3px}
+@media(max-width:520px){.practice-main{grid-template-columns:1fr 1.35fr 1fr}.practice-main button{padding:10px 4px;font-size:15px}.loopbar button{padding:9px 4px;font-size:13px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div><div class="brand">♪ <span>Strum</span>Mate</div><div class="sub">Dein persönlicher Gitarren-Mitspielmodus</div></div><button id="editToggle" class="smallbtn">Songdaten bearbeiten</button></header>
+<div class="layout">
+<section class="panel">
+<div class="sectionhead"><h2>Songbibliothek</h2><span class="pill">Demo + eigene Songs</span></div>
+<div class="row"><select id="songSelect" aria-label="Song auswählen"></select><button id="loadSong" class="primary">Laden</button></div>
+<div class="divider"></div>
+<div class="sectionhead"><div><h1 class="songtitle" id="songTitle">Midnight Drive</h1><div class="meta" id="songMeta">StrumMate Demo · Original-Demotext</div></div><span class="pill" id="keyPill">Tonart G</span></div>
+<div class="chips" id="chords"></div>
+<div class="divider"></div>
+<div class="sectionhead"><h2>Live-Player</h2><span class="status" id="playStatus">Bereit</span></div>
+<div class="player" id="player"><div class="placeholder"><div style="font-size:32px">▶</div><b>Wähle eine Audioquelle</b><p>Lokale Audiodatei oder YouTube-Link laden.</p></div></div>
+<div class="formgrid" style="margin-top:10px">
+<div><label class="sub" for="youtubeUrl">YouTube-URL (Einbettung)</label><input id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=…"><button id="loadYoutube" style="margin-top:7px;width:100%">YouTube laden</button></div>
+<div><label class="sub" for="audioFile">Eigene Audiodatei</label><input id="audioFile" type="file" accept="audio/*,video/mp4"><div class="note">Datei wird lokal im Browser abgespielt.</div></div>
+</div>
+<div class="transport"><button id="back10" title="10 Sekunden zurück">−10s</button><button id="playPause" class="primary">▶ Start</button><button id="forward10" title="10 Sekunden vor">+10s</button><span id="timeLabel" class="sub">0:00 / 0:00</span><input id="seek" type="range" min="0" max="100" value="0" aria-label="Position"></div>
+<div class="practicebar">
+    <div class="practice-main">
+      <button id="back5Btn" aria-label="5 Sekunden zurück">↶ −5 s</button>
+      <button class="playbig" id="practicePlayBtn" aria-label="Start oder Pause">▶ Start</button>
+      <button id="forward5Btn" aria-label="5 Sekunden vor">+5 s ↷</button>
+    </div>
+    <div class="bigtime"><span id="practiceTime">00:00 / 00:00</span></div>
+    <div class="loopbar">
+      <button class="set" id="loopABtn">A setzen</button>
+      <button class="set" id="loopBBtn">B setzen</button>
+      <button id="loopToggleBtn">Loop aus</button>
+    </div>
+    <div class="loopinfo" id="loopInfo">A–B-Loop noch nicht gesetzt</div>
+  </div>
+  <div class="controls" style="display:none">
+    <button class="primary" id="playBtn">▶ Start</button>
+    <button id="pauseBtn">Ⅱ Pause</button>
+    <button id="backBtn">↶ −10 s</button>
+    <button id="forwardBtn">+10 s ↷</button>
+  </div>
+<div class="transport"><label class="sub">Tempo <b id="tempoLabel">100%</b></label><input id="tempo" type="range" min="60" max="120" value="100"><button id="loopBtn" class="smallbtn">Abschnitt wiederholen: Aus</button></div>
+<div class="note" style="margin-top:8px">Hinweis: Bei YouTube hängt die Synchronisierung von der verfügbaren Wiedergabezeit ab. Die Audiodatei-Ansicht ist für zuverlässiges lokales Mitspielen vorgesehen.</div>
+</section>
+<section class="panel">
+<div class="sectionhead"><h2>Songtext · automatisch mitlaufend</h2><button id="scrollToggle" class="smallbtn active">Auto-Scroll an</button></div>
+<div class="lyrics" id="lyrics"></div>
+<div class="divider"></div>
+<div class="sectionhead"><h2>Gitarren-Tabs & Riffs</h2><span class="pill">Standardstimmung E A D G B e</span></div>
+<div class="tabs" id="tabs"></div>
+<div class="note" style="margin-top:8px">Tabs und Text sind Demo-Inhalte. Eigene Songdaten kannst du unten eintragen; Synchronisationszeiten sind editierbar.</div>
+</section>
+<section class="panel span2 hide" id="editor">
+<div class="sectionhead"><h2>Songdaten bearbeiten / eigenen Song anlegen</h2><button id="closeEditor" class="smallbtn">Schließen</button></div>
+<div class="formgrid">
+<div><label class="sub">Songtitel</label><input id="editTitle" placeholder="Titel"></div>
+<div><label class="sub">Interpret</label><input id="editArtist" placeholder="Interpret"></div>
+<div><label class="sub">Tonart</label><input id="editKey" placeholder="z. B. G-Dur"></div>
+<div><label class="sub">BPM (optional)</label><input id="editBpm" type="number" min="40" max="240" value="100"></div>
+</div>
+<p class="sub">Akkorde (durch Kommas getrennt)</p><input id="editChords" placeholder="G, D, Em, C">
+<p class="sub">Songtext mit Zeitstempeln – eine Zeile je Eintrag: <code>Sekunden|Akkord|Text</code></p>
+<textarea id="editLyrics" placeholder="0|G|Die Nacht beginnt, die Straßen glühn&#10;5|D|Wir fahren los, dem Morgen zu"></textarea>
+<p class="sub">Gitarren-Tabs / Riff</p><textarea id="editTabs" placeholder="e|---3-----3-----&#10;B|---0-----0-----&#10;G|---0-----0-----"></textarea>
+<div class="row"><button id="saveSong" class="primary">Song speichern</button><button id="exportSong">Songdaten exportieren (JSON)</button><label class="smallbtn" style="text-align:center;border:1px solid var(--line);border-radius:12px;padding:10px">JSON importieren<input id="importSong" type="file" accept=".json,application/json" class="hide"></label></div>
+<p class="note">Deine Songs werden auf diesem Gerät im Browser gespeichert. Exportiere JSON als Sicherung. Ein Songkatalog mit lizenzierten Originaltexten/Tabs und automatische Audio-Erkennung benötigen separate Datenquellen bzw. Dienste.</p>
+</section>
+</div>
+<footer class="sub" style="padding:18px 2px">StrumMate · Erste lauffähige Browser-Version · Für iPad optimiert</footer>
+</div>
+<script>
+const demo = {
+ id:"demo-midnight", title:"Midnight Drive", artist:"StrumMate Demo", key:"G", bpm:100,
+ chords:["G","D","Em","C"],
+ lyrics:[
+ {t:0,chord:"G",text:"Die Nacht beginnt, die Straßen glühn"},
+ {t:5,chord:"D",text:"Ein neuer Weg zieht uns dahin"},
+ {t:10,chord:"Em",text:"Der Wind erzählt, was morgen zählt"},
+ {t:15,chord:"C",text:"Wir folgen dem Licht, das niemals fehlt"},
+ {t:20,chord:"G",text:"Und wenn der Himmel langsam erwacht"},
+ {t:25,chord:"D",text:"Dann klingt noch unser Lied durch die Nacht"},
+ {t:30,chord:"Em",text:"Ein letzter Akkord, die Welt wird still"},
+ {t:35,chord:"C",text:"Weil jeder von uns weiterzieh'n will"}
+ ],
+ tabs:"Riff-Idee (Demo, nicht zu einem veröffentlichten Song):\ne|-------3---------2---------0---------0---|\nB|-----0---0-----3---3-----0---0-----1---1-|\nG|---0---------2---------0---------0---------|\nD|-------------------------------------------|\nA|-------------------------------------------|\nE|-3---------0---------0---------3-----------|\n\nAkkordfolge: G  | D  | Em | C\nTipp: langsam starten, dann Tempo steigern."
+};
+let songs=[demo], current=demo, audio=null, youtubePlayer=null, usingYoutube=false, isPlaying=false, autoScroll=true, loopEnabled=false, loopStart=0, loopEnd=15, raf=null, currentObjectUrl=null;
+const $=id=>document.getElementById(id);
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function duration(){if(usingYoutube&&youtubePlayer){try{return youtubePlayer.getDuration()||0}catch(e){}}return audio?.duration||0}
+function timeNow(){if(usingYoutube&&youtubePlayer){try{return youtubePlayer.getCurrentTime()||0}catch(e){}}return audio?.currentTime||0}
+function fmt(s){s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function renderSong(){
+ $("songTitle").textContent=current.title;$("songMeta").textContent=current.artist+" · "+(current.bpm?current.bpm+" BPM":"Tempo frei");$("keyPill").textContent="Tonart "+(current.key||"–");
+ $("chords").innerHTML=(current.chords||[]).map(c=>`<div class="chord"><b>${escapeHtml(c)}</b><small>Gitarrenakkord</small></div>`).join("");
+ $("tabs").textContent=current.tabs||"Noch keine Tabs eingetragen.";
+ $("lyrics").innerHTML=(current.lyrics||[]).map((l,i)=>`<div class="lyricline" data-index="${i}" data-time="${Number(l.t)||0}"><span class="inlinechord">${escapeHtml(l.chord||"")}</span>${escapeHtml(l.text||"")}</div>`).join("");
+ $("songSelect").innerHTML=songs.map(s=>`<option value="${escapeHtml(s.id)}">${escapeHtml(s.title)} — ${escapeHtml(s.artist)}</option>`).join("");$("songSelect").value=current.id;
+}
+function setSong(s){current=s;renderSong();fillEditor();updateActiveLine(0)}
+function fillEditor(){$("editTitle").value=current.title;$("editArtist").value=current.artist;$("editKey").value=current.key||"";$("editBpm").value=current.bpm||100;$("editChords").value=(current.chords||[]).join(", ");$("editLyrics").value=(current.lyrics||[]).map(l=>`${l.t}|${l.chord||""}|${l.text||""}`).join("\n");$("editTabs").value=current.tabs||""}
+function updateActiveLine(t){let lines=[...document.querySelectorAll(".lyricline")];if(!lines.length)return;let active=0;lines.forEach((el,i)=>{if(Number(el.dataset.time)<=t)active=i});lines.forEach((el,i)=>el.classList.toggle("current",i===active));if(autoScroll&&lines[active])lines[active].scrollIntoView({block:"nearest",behavior:"smooth"})}
+function updateUI(){let t=timeNow(),d=duration();$("timeLabel").textContent=fmt(t)+" / "+fmt(d);$("seek").value=d?Math.min(100,t/d*100):0;updateActiveLine(t);if(loopEnabled&&t>=loopEnd){seekTo(loopStart)}if(isPlaying)raf=requestAnimationFrame(updateUI)}
+function seekTo(t){if(usingYoutube&&youtubePlayer){try{youtubePlayer.seekTo(t,true)}catch(e){}}else if(audio)audio.currentTime=Math.max(0,t);updateActiveLine(t)}
+function stopRAF(){if(raf)cancelAnimationFrame(raf);raf=null}
+function startUI(){stopRAF();updateUI()}
+function play(){if(usingYoutube&&youtubePlayer){try{youtubePlayer.playVideo();isPlaying=true;$("playPause").textContent="Ⅱ Pause";$("playStatus").textContent="YouTube spielt";startUI()}catch(e){$("playStatus").textContent="YouTube-Player bereit"}}else if(audio){audio.playbackRate=Number($("tempo").value)/100;audio.play().then(()=>{isPlaying=true;$("playPause").textContent="Ⅱ Pause";$("playStatus").textContent="Wiedergabe läuft";startUI()}).catch(()=>{$("playStatus").textContent="Tippe erneut auf Start"})}else{$("playStatus").textContent="Bitte Audio oder YouTube laden"}}
+function pause(){if(usingYoutube&&youtubePlayer){try{youtubePlayer.pauseVideo()}catch(e){}}if(audio)audio.pause();isPlaying=false;$("playPause").textContent="▶ Start";$("playStatus").textContent="Pausiert";stopRAF()}
+function makeYT(){if(location.protocol!=="https:"&&location.hostname!=="localhost"){$("playStatus").textContent="Für YouTube muss StrumMate über HTTPS geöffnet werden.";return;}let url=$("youtubeUrl").value.trim();let id="";try{const u=new URL(url);if(u.hostname.includes("youtu.be"))id=u.pathname.slice(1);else id=u.searchParams.get("v")||u.pathname.split("/").filter(Boolean).pop();}catch(e){}if(!id){$("playStatus").textContent="Bitte gültige YouTube-URL eingeben";return}pause();usingYoutube=true;audio?.pause();audio=null;youtubePlayer=null;$("player").innerHTML=`<div id="ytFrame" style="width:100%;height:100%"></div>`;$("playStatus").textContent="YouTube wird geladen …";$("playPause").textContent="▶ Start";$("player").dataset.video=id;ensureYouTubeAPI();if(window.YT&&YT.Player)createYTPlayer(id)}
+function ensureYouTubeAPI(){if(window.YT&&YT.Player){const id=$("player").dataset.video;if(id)createYTPlayer(id);return}if(!document.getElementById("yt-api")){const tag=document.createElement("script");tag.id="yt-api";tag.src="https://www.youtube.com/iframe_api";document.head.appendChild(tag)}window.onYouTubeIframeAPIReady=()=>{const id=$("player").dataset.video;if(id)createYTPlayer(id)}}
+function createYTPlayer(id){if(!window.YT||!YT.Player||!$("ytFrame"))return;try{youtubePlayer=new YT.Player("ytFrame",{videoId:id,playerVars:{playsinline:1,rel:0,origin:location.origin},events:{onReady:()=>{$("playStatus").textContent="YouTube bereit";updateUI()},onStateChange:e=>{if(e.data===1){isPlaying=true;$ ("playPause").textContent="Ⅱ Pause";startUI()}else if(e.data===2||e.data===0){isPlaying=false;$ ("playPause").textContent="▶ Start";stopRAF()}},onError:e=>{isPlaying=false;$ ("playPause").textContent="▶ Start";const m={2:"Ungültige Video-ID",5:"YouTube-Wiedergabefehler",100:"Video nicht gefunden oder privat",101:"Einbettung für dieses Video gesperrt",150:"Einbettung für dieses Video gesperrt",153:"YouTube konnte die Herkunft der Anfrage nicht prüfen"};$("playStatus").textContent=m[e.data]||("YouTube-Fehler "+e.data);stopRAF()}}})}catch(e){$("playStatus").textContent="YouTube-Player konnte nicht initialisiert werden"}}
+$("loadYoutube").onclick=makeYT;
+$("playPause").onclick=()=>isPlaying?pause():play();
+$("back10").onclick=()=>seekTo(Math.max(0,timeNow()-10));$("forward10").onclick=()=>seekTo(Math.min(duration()||1,timeNow()+10));
+$("seek").oninput=e=>seekTo((duration()||0)*Number(e.target.value)/100);
+$("tempo").oninput=e=>{$("tempoLabel").textContent=e.target.value+"%";if(audio)audio.playbackRate=Number(e.target.value)/100};
+$("loopBtn").onclick=()=>{loopEnabled=!loopEnabled;$("loopBtn").textContent=loopEnabled?`Abschnitt wiederholen: ${fmt(loopStart)}–${fmt(loopEnd)}`:"Abschnitt wiederholen: Aus";if(loopEnabled&&duration()===0){loopStart=0;loopEnd=15;$("loopBtn").textContent="Abschnitt wiederholen: 0:00–0:15"}};
+$("scrollToggle").onclick=()=>{autoScroll=!autoScroll;$("scrollToggle").textContent=autoScroll?"Auto-Scroll an":"Auto-Scroll aus";$("scrollToggle").classList.toggle("active",autoScroll)};
+$("audioFile").onchange=e=>{const f=e.target.files?.[0];if(!f)return;pause();usingYoutube=false;youtubePlayer=null;if(currentObjectUrl)URL.revokeObjectURL(currentObjectUrl);currentObjectUrl=URL.createObjectURL(f);$("player").innerHTML="";audio=document.createElement("audio");audio.controls=true;audio.preload="metadata";audio.src=currentObjectUrl;audio.style.width="100%";audio.style.height="100%";$("player").appendChild(audio);audio.onplay=()=>{isPlaying=true;$("playPause").textContent="Ⅱ Pause";$("playStatus").textContent="Wiedergabe läuft";startUI()};audio.onpause=()=>{isPlaying=false;$("playPause").textContent="▶ Start";stopRAF()};audio.onended=()=>{isPlaying=false;$("playPause").textContent="▶ Start";stopRAF()};audio.onloadedmetadata=()=>{$("playStatus").textContent="Datei bereit: "+f.name;updateUI()};};
+$("loadSong").onclick=()=>{const s=songs.find(x=>x.id===$("songSelect").value);if(s)setSong(s)};
+$("editToggle").onclick=()=>{$("editor").classList.toggle("hide");fillEditor()};$("closeEditor").onclick=()=>$("editor").classList.add("hide");
+$("saveSong").onclick=()=>{const title=$("editTitle").value.trim()||"Eigener Song";const id=current.id.startsWith("user-")?current.id:"user-"+Date.now();const lyrics=$("editLyrics").value.split("\n").map(line=>{const p=line.split("|");return {t:Math.max(0,Number(p[0])||0),chord:(p[1]||"").trim(),text:p.slice(2).join("|").trim()}}).filter(l=>l.text||l.chord);const s={id,title,artist:$("editArtist").value.trim()||"Eigener Song",key:$("editKey").value.trim(),bpm:Number($("editBpm").value)||100,chords:$("editChords").value.split(",").map(x=>x.trim()).filter(Boolean),lyrics,tabs:$("editTabs").value};const i=songs.findIndex(x=>x.id===id);if(i>=0)songs[i]=s;else songs.push(s);current=s;persist();renderSong();$("playStatus").textContent="Song gespeichert";};
+function persist(){try{localStorage.setItem("strummate-songs",JSON.stringify(songs.filter(s=>s.id!==demo.id)))}catch(e){}}
+try{const saved=JSON.parse(localStorage.getItem("strummate-songs")||"[]");if(Array.isArray(saved))songs=songs.concat(saved)}catch(e){}
+$("exportSong").onclick=()=>{const blob=new Blob([JSON.stringify(current,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(current.title||"song").replace(/[^a-z0-9_-]/gi,"_")+".json";a.click();URL.revokeObjectURL(a.href)};
+$("importSong").onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{const s=JSON.parse(await f.text());if(!s.title||!Array.isArray(s.lyrics))throw Error("Format");s.id="user-"+Date.now();songs.push(s);current=s;persist();renderSong();fillEditor();$("playStatus").textContent="Songdaten importiert"}catch(err){$("playStatus").textContent="JSON konnte nicht importiert werden"}e.target.value=""};
+renderSong();fillEditor();updateActiveLine(0);
+</script>
+<script>
+(()=>{
+let loopA=null,loopB=null,loopEnabled=false;
+const el=id=>document.getElementById(id);
+function P(){return window.ytPlayer||window.player||null}
+function pTime(){try{const p=P();return p&&p.getCurrentTime?p.getCurrentTime():0}catch(e){return 0}}
+function pDuration(){try{const p=P();return p&&p.getDuration?p.getDuration():0}catch(e){return 0}}
+function pSeek(t){const p=P();if(p&&p.seekTo)p.seekTo(Math.max(0,Math.min(pDuration()||999999,t)),true)}
+function pFmt(sec){sec=Math.max(0,Math.floor(Number(sec)||0));return String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0")}
+function status(msg){const s=el("playStatus")||el("status");if(s)s.textContent=msg}
+function updatePracticeUI(){
+ const p=P(),t=pTime(),d=pDuration();el("practiceTime").textContent=pFmt(t)+" / "+pFmt(d);
+ if(p&&window.YT&&p.getPlayerState)el("practicePlayBtn").textContent=p.getPlayerState()===YT.PlayerState.PLAYING?"Ⅱ Pause":"▶ Start";
+ el("loopInfo").textContent=(loopA===null&&loopB===null)?"A–B-Loop noch nicht gesetzt":"A "+(loopA===null?"—":pFmt(loopA))+" · B "+(loopB===null?"—":pFmt(loopB))+(loopEnabled?" · läuft":"");
+ el("loopToggleBtn").textContent=loopEnabled?"Loop an":"Loop aus";el("loopToggleBtn").classList.toggle("active",loopEnabled);
+}
+function practiceToggle(){const p=P();if(!p||!p.getPlayerState){status("Bitte zuerst einen YouTube-Song laden.");return}if(p.getPlayerState()===YT.PlayerState.PLAYING)p.pauseVideo();else p.playVideo()}
+function setLoopA(){if(!P())return;loopA=pTime();if(loopB!==null&&loopB<=loopA)loopB=null;loopEnabled=false;updatePracticeUI()}
+function setLoopB(){if(!P())return;const t=pTime();if(loopA===null){status("Bitte zuerst Punkt A setzen.");return}if(t<=loopA+.5){status("Punkt B muss mindestens 0,5 Sekunden nach A liegen.");return}loopB=t;loopEnabled=true;status("A–B-Loop aktiv.");updatePracticeUI()}
+function toggleLoop(){if(loopA===null||loopB===null){status("Bitte zuerst A und B setzen.");return}loopEnabled=!loopEnabled;updatePracticeUI()}
+el("practicePlayBtn").addEventListener("click",practiceToggle);
+el("back5Btn").addEventListener("click",()=>pSeek(pTime()-5));
+el("forward5Btn").addEventListener("click",()=>pSeek(pTime()+5));
+el("loopABtn").addEventListener("click",setLoopA);
+el("loopBBtn").addEventListener("click",setLoopB);
+el("loopToggleBtn").addEventListener("click",toggleLoop);
+setInterval(()=>{if(loopEnabled&&loopA!==null&&loopB!==null&&pTime()>=loopB-.08)pSeek(loopA);updatePracticeUI()},100);
+})();
+</script>
+
+</body></html>
