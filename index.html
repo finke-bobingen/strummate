@@ -187,8 +187,8 @@ function updatePracticeUI(){
     (practiceLoopA===null && practiceLoopB===null)
       ? "A–B-Loop noch nicht gesetzt"
       : "A "+(practiceLoopA===null?"—":pFmt(practiceLoopA))+
-        " · B "+(practiceLoopB===null?"—":pFmt(practiceLoopB))+
-        (practiceLoopEnabled?" · läuft":"");
+        " → B "+(practiceLoopB===null?"—":pFmt(practiceLoopB))+
+        " · LOOP "+(practiceLoopEnabled?"AN":"AUS");
 
   el("loopToggleBtn").textContent=practiceLoopEnabled?"Loop an":"Loop aus";
   el("loopToggleBtn").classList.toggle("active",practiceLoopEnabled);
@@ -212,7 +212,8 @@ function setLoopB(){
   if(t<=practiceLoopA+0.5){ status("Punkt B muss mindestens 0,5 Sekunden nach A liegen."); return; }
   practiceLoopB=t;
   practiceLoopEnabled=true;
-  status("A–B-Loop aktiv.");
+  status("A–B-Loop aktiv: "+pFmt(practiceLoopA)+" → "+pFmt(practiceLoopB));
+  pSeek(practiceLoopA);
   updatePracticeUI();
 }
 function togglePracticeLoop(){
@@ -239,11 +240,12 @@ el("loopBBtn").addEventListener("click",setLoopB);
 el("loopToggleBtn").addEventListener("click",togglePracticeLoop);
 
 setInterval(()=>{
-  if(practiceLoopEnabled && practiceLoopA!==null && practiceLoopB!==null && pTime()>=practiceLoopB-0.08){
+  const now=pTime();
+  if(practiceLoopEnabled && practiceLoopA!==null && practiceLoopB!==null && now>=practiceLoopB-0.12){
     pSeek(practiceLoopA);
   }
   updatePracticeUI();
-},100);
+},50);
 })();
 </script>
 
