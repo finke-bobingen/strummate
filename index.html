@@ -213,7 +213,6 @@ function setLoopB(){
   practiceLoopB=t;
   practiceLoopEnabled=true;
   status("A–B-Loop aktiv: "+pFmt(practiceLoopA)+" → "+pFmt(practiceLoopB));
-  pSeek(practiceLoopA);
   updatePracticeUI();
 }
 function togglePracticeLoop(){
@@ -239,13 +238,23 @@ el("loopABtn").addEventListener("click",setLoopA);
 el("loopBBtn").addEventListener("click",setLoopB);
 el("loopToggleBtn").addEventListener("click",togglePracticeLoop);
 
+let practiceLoopSeekLocked=false;
 setInterval(()=>{
   const now=pTime();
-  if(practiceLoopEnabled && practiceLoopA!==null && practiceLoopB!==null && now>=practiceLoopB-0.12){
-    pSeek(practiceLoopA);
+  if(practiceLoopEnabled && practiceLoopA!==null && practiceLoopB!==null){
+    if(!practiceLoopSeekLocked && now>=practiceLoopB){
+      practiceLoopSeekLocked=true;
+      pSeek(practiceLoopA);
+      if(youtubePlayer && typeof youtubePlayer.playVideo==="function"){
+        youtubePlayer.playVideo();
+      }
+      setTimeout(()=>{ practiceLoopSeekLocked=false; },350);
+    }
+  } else {
+    practiceLoopSeekLocked=false;
   }
   updatePracticeUI();
-},50);
+},100);
 })();
 </script>
 
